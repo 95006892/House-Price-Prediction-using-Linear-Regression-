@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>House Price Prediction System</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef4fb;--card:#fff;--ink:#1c2b3d;--mut:#64748b;--line:#e2e9f1;--blue:#2f80ed;--blue2:#4a9bf5;--bl:#e3f0ff;--gr:#16a37a;--grl:#e0f5ec;--in:#f7faff;--node:#cfe6fb}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1824;--card:#15233a;--ink:#e6edf5;--mut:#9db0c4;--line:#27405c;--bl:#1d3a5f;--grl:#12392f;--in:#101d30;--node:#24507f}}
+:root[data-theme="dark"]{--bg:#0e1824;--card:#15233a;--ink:#e6edf5;--mut:#9db0c4;--line:#27405c;--bl:#1d3a5f;--grl:#12392f;--in:#101d30;--node:#24507f}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header{background:linear-gradient(100deg,#2f80ed,#5aa5f7);color:#fff;padding:22px 24px}
+.hin{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:2.4rem}
+h1{margin:0;font-size:1.9rem;line-height:1.15}
+header p{margin:2px 0 0;opacity:.92}
+.hin>div:nth-child(2){flex:1;min-width:220px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tags span{background:rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;font-size:.8rem;font-weight:600}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 48px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 2px 14px rgba(47,128,237,.1);border:1px solid var(--line);min-width:0}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ch h2{margin:0;font-size:1.1rem}
+.pill{font-size:.72rem;font-weight:600;border-radius:14px;padding:3px 11px;background:var(--bl);color:var(--blue)}
+.pill.g{background:var(--grl);color:var(--gr)}
+.ch .pill:last-child{margin-left:auto}
+.ch .ic{font-size:1.3rem}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+label{font-size:.8rem;font-weight:600;display:block;margin-bottom:4px}
+input{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:6px;background:var(--in);color:var(--ink);font:inherit}
+input:focus-visible,button:focus-visible{outline:3px solid #f0b24a;outline-offset:2px}
+button{border:0;border-radius:6px;color:#fff;font:600 .95rem inherit;font-family:inherit;padding:11px;cursor:pointer;background:var(--blue);width:100%}
+button.g{background:var(--gr)}
+button:hover{filter:brightness(1.08)}
+.res{background:var(--grl);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px;font-size:.88rem}
+.res .big{font-weight:700;color:var(--gr);font-size:1.05rem;margin-bottom:8px}
+.res ul{list-style:none;margin:6px 0 0;padding:0}
+.res li{padding:3px 0}
+.n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--bl);color:var(--blue);font-size:.72rem;font-weight:700;margin-right:6px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;text-align:center;font-size:.88rem}
+th{background:var(--bl);padding:9px 6px;font-weight:600}
+td{padding:9px 6px;border-bottom:1px solid var(--line)}
+.sr{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:560px){.sr{grid-template-columns:1fr}}
+.box{background:var(--in);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:.85rem}
+.box b{display:block;margin-bottom:6px}
+.sf{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.sf button{width:auto;padding:10px 22px}
+.ok{color:var(--gr);margin-right:6px}
+.msg{font-size:.85rem;margin-top:10px;min-height:1.2em;color:var(--gr)}
+.msg.e{color:#d64545}
+svg text{font:600 11px "Segoe UI",sans-serif;fill:var(--ink)}
+</style></head><body>
+<header><div class="hin"><div class="logo">🏠</div><div><h1>House Price Prediction System</h1><p>Interactive demo of the data structures from the C project</p></div>
+<div class="tags"><span>Array</span><span>Max Heap</span><span>BST</span><span>Merge Sort</span></div></div></header>
+<main>
+<section class="card"><div class="ch"><span class="ic">📊</span><h2>Predict House Price</h2><span class="pill">Max Heap / KNN</span></div>
+<div class="row"><div><label for="pa">Area (sq ft)</label><input id="pa" type="number" value="1300"></div>
+<div><label for="pb">Bedrooms</label><input id="pb" type="number" value="3"></div>
+<div><label for="pg">Age (years)</label><input id="pg" type="number" value="4"></div></div>
+<button id="pbtn" style="margin-top:14px">✦ Predict</button>
+<div class="res" id="pres"></div></section>
+
+<section class="card"><div class="ch"><span class="ic">☰</span><h2>Houses Sorted by Price</h2><span class="pill g">Merge Sort</span></div>
+<div class="tw"><table><thead><tr><th>ID</th><th>Area (sq ft)</th><th>BHK</th><th>Age (years)</th><th>Price (Lakhs)</th></tr></thead><tbody id="tb"></tbody></table></div></section>
+
+<section class="card"><div class="ch"><span class="ic">🔍</span><h2>Price Range Search</h2><span class="pill">BST</span></div>
+<div class="sf"><div><label for="lo">Min Price (Lakhs)</label><input id="lo" type="number" value="60"></div>
+<div><label for="hi">Max Price (Lakhs)</label><input id="hi" type="number" value="100"></div><button id="sbtn">Search</button></div>
+<div class="sr"><div class="box"><b>Binary Search Tree (Price)</b><svg id="tree" role="img" aria-label="Binary search tree of house prices"></svg></div>
+<div class="box"><b>Search Result</b><div id="sres"></div></div></div></section>
+
+<section class="card"><div class="ch"><span class="ic" style="color:var(--blue)">⊕</span><h2>Add House Record</h2><span class="pill g">Array</span></div>
+<div class="row2"><div><label for="aa">Area (sq ft)</label><input id="aa" type="number" placeholder="Enter area"></div>
+<div><label for="ag">Age (years)</label><input id="ag" type="number" placeholder="Enter age"></div>
+<div><label for="ab">Bedrooms</label><input id="ab" type="number" placeholder="Enter bedrooms"></div>
+<div><label for="ap">Price (Lakhs)</label><input id="ap" type="number" placeholder="Enter price"></div></div>
+<button class="g" id="abtn" style="margin-top:16px">+ Add House</button><div class="msg" id="amsg" role="status"></div></section>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+// Array of house records
+let H=[{id:2,a:1200,b:3,g:3,p:70},{id:1,a:1000,b:2,g:5,p:55},{id:3,a:1500,b:3,g:8,p:80},{id:6,a:900,b:2,g:10,p:40},{id:8,a:1100,b:2,g:4,p:60},{id:4,a:1800,b:4,g:2,p:110}];
+let nid=9;
+// Max heap (keeps the K smallest distances; root = farthest of them)
+function hpush(h,x){h.push(x);let i=h.length-1;while(i>0){const p=(i-1)>>1;if(h[p].d>=h[i].d)break;[h[p],h[i]]=[h[i],h[p]];i=p}}
+function hpop(h){const t=h[0],l=h.pop();if(h.length){h[0]=l;let i=0;for(;;){const a=2*i+1,b=a+1;let m=i;if(a<h.length&&h[a].d>h[m].d)m=a;if(b<h.length&&h[b].d>h[m].d)m=b;if(m===i)break;[h[m],h[i]]=[h[i],h[m]];i=m}}return t}
+function knn(a,b,g,k=3){const h=[];for(const x of H){const d=Math.hypot((a-x.a)/100,(b-x.b)*2,(g-x.g)/2);if(h.length<k)hpush(h,{x,d});else if(d<h[0].d){hpop(h);hpush(h,{x,d})}}return h.sort((u,v)=>u.d-v.d).map(e=>e.x)}
+// Merge sort by price
+function ms(a){if(a.length<2)return a;const m=a.length>>1,l=ms(a.slice(0,m)),r=ms(a.slice(m)),o=[];let i=0,j=0;while(i<l.length&&j<r.length)o.push(l[i].p<=r[j].p?l[i++]:r[j++]);return o.concat(l.slice(i),r.slice(j))}
+// Binary search tree by price
+function ins(n,h){if(!n)return{h,l:null,r:null};if(h.p<n.h.p)n.l=ins(n.l,h);else n.r=ins(n.r,h);return n}
+function range(n,lo,hi,o){if(!n)return o;if(lo<n.h.p)range(n.l,lo,hi,o);if(lo<=n.h.p&&n.h.p<=hi)o.push(n.h);if(hi>n.h.p)range(n.r,lo,hi,o);return o}
+const tree=()=>H.reduce(ins,null);
+
+function predict(){
+  const a=+$("pa").value,b=+$("pb").value,g=+$("pg").value;
+  if(!H.length||isNaN(a+b+g)){$("pres").textContent="Enter area, bedrooms and age.";return}
+  const nn=knn(a,b,g),avg=nn.reduce((t,x)=>t+x.p,0)/nn.length;
+  $("pres").innerHTML=`<div class="big">🏠 Predicted Price: ${avg.toFixed(2)} Lakhs</div><b>${nn.length} Nearest Houses:</b><ul>`+
+   nn.map((x,i)=>`<li><span class="n">${i+1}</span><b>ID ${x.id}</b> – Area: ${x.a} | BHK: ${x.b} | Age: ${x.g} | Price: ${x.p} L</li>`).join("")+"</ul>";
+}
+function table(){$("tb").innerHTML=ms(H).map(x=>`<tr><td>${x.id}</td><td>${x.a}</td><td>${x.b}</td><td>${x.g}</td><td>${x.p}</td></tr>`).join("")}
+function search(){
+  const lo=+$("lo").value,hi=+$("hi").value,t=tree(),hit=range(t,lo,hi,[]),set=new Set(hit.map(x=>x.id));
+  // draw tree
+  const nodes=[];let c=0,maxD=0;
+  (function walk(n,d,par){if(!n)return;walk(n.l,d+1,n);const o={n,x:c++,d,par};n.o=o;nodes.push(o);maxD=Math.max(maxD,d);walk(n.r,d+1,n)})(t,0);
+  const sx=44,sy=52,W=Math.max(c,1)*sx+20,Ht=(maxD+1)*sy+16;let s="";
+  nodes.forEach(o=>{if(o.par){const p=o.par.o;s+=`<line x1="${p.x*sx+32}" y1="${p.d*sy+26}" x2="${o.x*sx+32}" y2="${o.d*sy+26}" stroke="var(--mut)" stroke-width="1.3"/>`}});
+  nodes.forEach(o=>{const m=set.has(o.n.h.id);s+=`<circle cx="${o.x*sx+32}" cy="${o.d*sy+26}" r="16" fill="${m?"var(--gr)":"var(--node)"}" stroke="var(--blue)" stroke-width="1.5"/><text x="${o.x*sx+32}" y="${o.d*sy+30}" text-anchor="middle" ${m?'style="fill:#fff"':""}>${o.n.h.p}</text>`});
+  const sv=$("tree");sv.setAttribute("viewBox",`0 0 ${W} ${Ht}`);sv.innerHTML=s;
+  $("sres").innerHTML=`Houses in price range ${lo} – ${hi}:`+(hit.length?hit.map(x=>`<div><span class="ok">✔</span>ID ${x.id} – ${x.p} L</div>`).join(""):"<div>No houses found.</div>");
+}
+function add(){
+  const a=+$("aa").value,g=$("ag").value,b=+$("ab").value,p=+$("ap").value,m=$("amsg");
+  if(!a||!b||!p||g===""||a<0||b<0||p<0||+g<0){m.className="msg e";m.textContent="Fill in all four fields with positive numbers.";return}
+  H.push({id:nid,a,b,g:+g,p});m.className="msg";m.textContent=`House ID ${nid} added.`;nid++;
+  ["aa","ag","ab","ap"].forEach(i=>$(i).value="");table();search();predict();
+}
+$("pbtn").onclick=predict;$("sbtn").onclick=search;$("abtn").onclick=add;
+table();search();predict();
+</script></body></html>
